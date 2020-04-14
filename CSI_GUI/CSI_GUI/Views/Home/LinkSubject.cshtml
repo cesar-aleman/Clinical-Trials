@@ -1,0 +1,66 @@
+﻿@using CSI_GUI.Models
+@using CSI_GUI.Code
+@model CSI_GUI.Controllers.HomeController.LinkSubjectsViewModel
+
+@{
+    ViewBag.Title = "LinkSubject";
+}
+
+<div class="row">
+    <div class="col-lg-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>DOB</th>
+                    <th>Height (inches)</th>
+                    <th>Survival Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sub in Model.unassignedSubjects)
+            {
+                    <tr>
+                        <td>@sub.subInitials</td>
+                        <td>@sub.subDOB.ToString()</td>
+                        <td>@sub.subHeight</td>
+                        <td>@sub.subSurvivalStatus</td>
+                        <td>@Html.ActionLink("Add", "LinkSubjectID", new { subID = sub.subPID, sarID = Model.studyArmID }, new { @class = "text" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-1">
+    </div>
+
+    <div class="col-lg-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>DOB</th>
+                    <th>Height (inches)</th>
+                    <th>Survival Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sub in Model.assignedSubjects)
+            {
+                    <tr>
+                        <td>@sub.subInitials</td>
+                        <td>@sub.subDOB.ToString()</td>
+                        <td>@sub.subHeight</td>
+                        <td>@sub.subSurvivalStatus</td>
+                        <td>@Html.ActionLink("Remove", "unLinkSubjectID", new { subID = sub.subPID, sarID = Model.studyArmID }, new { @class = "text" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+
+

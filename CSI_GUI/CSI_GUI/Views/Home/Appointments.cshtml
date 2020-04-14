@@ -1,0 +1,48 @@
+﻿@using CSI_GUI.Models
+@model List<AppointmentViewModel>
+
+@{
+    ViewBag.Title = "Appointments";
+}
+
+<div class="jumbotron">
+    <table class="table table-hover">
+        <thead>
+            <tr>Appointment Information</tr>
+            <tr>
+                <th>StudyArm ID</th>
+                <th>Subject</th>
+                <th>Doctor</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Completed</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@item.appStudyArmLinkID.ToString(), "StudyArmDetailsView", new { id = @item.appStudyArmLinkID }, new { @class = "btn btn-primary" })</td>
+                    <td>@item.subInitials</td>
+                    <td>@item.docName</td>
+                    <td>@item.appStartDate</td>
+                    <td>@item.appEndDate</td>
+                    @if (@item.appCompletedStatus == 1)
+                    {
+                        <td>Completed</td>
+                    }
+                    else
+                    {
+                        <td>Incomplete</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+
+
+</div>

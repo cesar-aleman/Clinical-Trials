@@ -1,0 +1,33 @@
+﻿@using CSI_GUI.Models
+@model List<SubjectReportViewModel>
+@{
+    ViewBag.Title = "Subject Report";
+}
+<h2>Subject Report</h2>
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Subject Initials</th>
+                <th>Study Name</th>
+                <th>Study Arm Name</th>
+                <th>Completed Status</th>
+                <th>Survival Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>Subject Appointment Information</tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.subInitials</td>
+                    <td>@item.stuName</td>
+                    <td>@item.sarName</td>
+                    <td>@item.appCompletedStatus</td>
+                    <td>@item.subSurvivalStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

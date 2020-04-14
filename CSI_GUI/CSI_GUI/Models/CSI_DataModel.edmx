@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_91387_spring2018dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="actPID" />
+          </Key>
+          <Property Name="actPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="actName" Type="varchar" MaxLength="100" />
+          <Property Name="actDescription" Type="varchar(max)" />
+          <Property Name="actDuration" Type="int" />
+          <Property Name="actCost" Type="float" />
+          <Property Name="actStudyArmLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="appPID" />
+          </Key>
+          <Property Name="appPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="appStartDate" Type="datetime" />
+          <Property Name="appEndDate" Type="datetime" />
+          <Property Name="appCompletedStatus" Type="int" />
+          <Property Name="appStudyArmLinkID" Type="int" />
+          <Property Name="appActivityLinkID" Type="int" />
+          <Property Name="appVisitLinkID" Type="int" />
+          <Property Name="appDoctorLinkID" Type="int" />
+          <Property Name="appSubjectLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="docPID" />
+          </Key>
+          <Property Name="docPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="docName" Type="varchar" MaxLength="100" />
+          <Property Name="docSpecialization" Type="varchar(max)" />
+          <Property Name="docPhoneNumber" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DoctorAssignedTo">
+          <Key>
+            <PropertyRef Name="datPID" />
+          </Key>
+          <Property Name="datPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datCreatedDate" Type="datetime" />
+          <Property Name="datCreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="datDoctorLinkID" Type="int" />
+          <Property Name="datStudyArmLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="DocumentInfo">
+          <Key>
+            <PropertyRef Name="dinPID" />
+          </Key>
+          <Property Name="dinPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dinDescription" Type="varchar(max)" />
+          <Property Name="dinFileName" Type="varchar(max)" />
+          <Property Name="dinBLOB" Type="varbinary(max)" />
+          <Property Name="dinVersion" Type="int" />
+          <Property Name="dinStudyArmLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="Site">
+          <Key>
+            <PropertyRef Name="sitPID" />
+          </Key>
+          <Property Name="sitPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sitName" Type="varchar" MaxLength="100" />
+          <Property Name="sitDescription" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Sponsor">
+          <Key>
+            <PropertyRef Name="spoPID" />
+          </Key>
+          <Property Name="spoPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="spoName" Type="varchar" MaxLength="100" />
+          <Property Name="spoPhoneNumber" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Study">
+          <Key>
+            <PropertyRef Name="stuPID" />
+          </Key>
+          <Property Name="stuPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stuName" Type="varchar" MaxLength="50" />
+          <Property Name="stuDescription" Type="varchar(max)" />
+          <Property Name="stuEnrollmentGoal" Type="int" />
+          <Property Name="stuCompletedStatus" Type="varchar" MaxLength="25" />
+          <Property Name="stuStartDate" Type="datetime" />
+          <Property Name="stuEndDate" Type="datetime" />
+          <Property Name="stuSponsorLinKID" Type="int" />
+          <Property Name="stuSiteLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="StudyArm">
+          <Key>
+            <PropertyRef Name="sarPID" />
+          </Key>
+          <Property Name="sarPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sarName" Type="varchar" MaxLength="50" />
+          <Property Name="sarStudyLinkID" Type="int" />
+          <Property Name="sarEnrollmentGoal" Type="int" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="subPID" />
+          </Key>
+          <Property Name="subPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subInitials" Type="varchar" MaxLength="50" />
+          <Property Name="subDOB" Type="datetime" />
+          <Property Name="subGender" Type="varchar" MaxLength="25" />
+          <Property Name="subHeight" Type="float" />
+          <Property Name="subBloodType" Type="varchar" MaxLength="25" />
+          <Property Name="subStatus" Type="varchar" MaxLength="25" />
+          <Property Name="subSurvivalStatus" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="SubjectAssignedTo">
+          <Key>
+            <PropertyRef Name="satPID" />
+          </Key>
+          <Property Name="satPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="satCreatedDate" Type="datetime" />
+          <Property Name="satCreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="satSubjectLinkID" Type="int" />
+          <Property Name="satStudyArmLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserPermissions">
+          <Key>
+            <PropertyRef Name="upePID" />
+          </Key>
+          <Property Name="upePID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="upeCreatedDate" Type="datetime" />
+          <Property Name="upeCreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="upeUserLinkID" Type="int" />
+          <Property Name="upeStudyLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="usePID" />
+          </Key>
+          <Property Name="usePID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="useCreatedDate" Type="datetime" />
+          <Property Name="useCreatedBy" Type="varchar" MaxLength="255" />
+          <Property Name="useModifiedDate" Type="datetime" />
+          <Property Name="useModifiedBy" Type="varchar" MaxLength="255" />
+          <Property Name="useUserStatus" Type="int" />
+          <Property Name="useUserType" Type="int" />
+          <Property Name="useUserName" Type="varchar" MaxLength="255" />
+          <Property Name="usePassword" Type="varchar(max)" />
+          <Property Name="useSiteLinkID" Type="int" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="visPID" />
+          </Key>
+          <Property Name="visPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="visName" Type="int" />
+          <Property Name="visDescription" Type="varchar(max)" />
+          <Property Name="visStart" Type="datetime" />
+          <Property Name="visEnd" Type="datetime" />
+          <Property Name="visStudyArmLinkID" Type="int" />
+        </EntityType>
+        <EntityContainer Name="DB_91387_spring2018dbModelStoreContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorAssignedTo" EntityType="Self.DoctorAssignedTo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentInfo" EntityType="Self.DocumentInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Site" EntityType="Self.Site" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sponsor" EntityType="Self.Sponsor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Study" EntityType="Self.Study" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudyArm" EntityType="Self.StudyArm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectAssignedTo" EntityType="Self.SubjectAssignedTo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPermissions" EntityType="Self.UserPermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_91387_spring2018dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="actPID" />
+          </Key>
+          <Property Name="actPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="actName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="actDuration" Type="Int32" />
+          <Property Name="actCost" Type="Double" />
+          <Property Name="actStudyArmLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="appPID" />
+          </Key>
+          <Property Name="appPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="appStartDate" Type="DateTime" Precision="3" />
+          <Property Name="appEndDate" Type="DateTime" Precision="3" />
+          <Property Name="appCompletedStatus" Type="Int32" />
+          <Property Name="appStudyArmLinkID" Type="Int32" />
+          <Property Name="appActivityLinkID" Type="Int32" />
+          <Property Name="appVisitLinkID" Type="Int32" />
+          <Property Name="appDoctorLinkID" Type="Int32" />
+          <Property Name="appSubjectLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="docPID" />
+          </Key>
+          <Property Name="docPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="docName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="docSpecialization" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="docPhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DoctorAssignedTo">
+          <Key>
+            <PropertyRef Name="datPID" />
+          </Key>
+          <Property Name="datPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="datCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="datDoctorLinkID" Type="Int32" />
+          <Property Name="datStudyArmLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="DocumentInfo">
+          <Key>
+            <PropertyRef Name="dinPID" />
+          </Key>
+          <Property Name="dinPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dinDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="dinFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="dinBLOB" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="dinVersion" Type="Int32" />
+          <Property Name="dinStudyArmLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Site">
+          <Key>
+            <PropertyRef Name="sitPID" />
+          </Key>
+          <Property Name="sitPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sitName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sitDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sponsor">
+          <Key>
+            <PropertyRef Name="spoPID" />
+          </Key>
+          <Property Name="spoPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spoName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="spoPhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Study">
+          <Key>
+            <PropertyRef Name="stuPID" />
+          </Key>
+          <Property Name="stuPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stuDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="stuEnrollmentGoal" Type="Int32" />
+          <Property Name="stuCompletedStatus" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="stuStartDate" Type="DateTime" Precision="3" />
+          <Property Name="stuEndDate" Type="DateTime" Precision="3" />
+          <Property Name="stuSponsorLinKID" Type="Int32" />
+          <Property Name="stuSiteLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StudyArm">
+          <Key>
+            <PropertyRef Name="sarPID" />
+          </Key>
+          <Property Name="sarPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sarName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sarStudyLinkID" Type="Int32" />
+          <Property Name="sarEnrollmentGoal" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="subPID" />
+          </Key>
+          <Property Name="subPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subInitials" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="subDOB" Type="DateTime" Precision="3" />
+          <Property Name="subGender" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="subHeight" Type="Double" />
+          <Property Name="subBloodType" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="subStatus" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="subSurvivalStatus" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SubjectAssignedTo">
+          <Key>
+            <PropertyRef Name="satPID" />
+          </Key>
+          <Property Name="satPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="satCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="satCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="satSubjectLinkID" Type="Int32" />
+          <Property Name="satStudyArmLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UserPermissions">
+          <Key>
+            <PropertyRef Name="upePID" />
+          </Key>
+          <Property Name="upePID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="upeCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="upeCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="upeUserLinkID" Type="Int32" />
+          <Property Name="upeStudyLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="usePID" />
+          </Key>
+          <Property Name="usePID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="useCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="useCreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="useModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="useModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="useUserStatus" Type="Int32" />
+          <Property Name="useUserType" Type="Int32" />
+          <Property Name="useUserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="usePassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="useSiteLinkID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="visPID" />
+          </Key>
+          <Property Name="visPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="visName" Type="Int32" />
+          <Property Name="visDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="visStart" Type="DateTime" Precision="3" />
+          <Property Name="visEnd" Type="DateTime" Precision="3" />
+          <Property Name="visStudyArmLinkID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activity" EntityType="Self.Activity" />
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" />
+          <EntitySet Name="DoctorAssignedTo" EntityType="Self.DoctorAssignedTo" />
+          <EntitySet Name="DocumentInfo" EntityType="Self.DocumentInfo" />
+          <EntitySet Name="Site" EntityType="Self.Site" />
+          <EntitySet Name="Sponsor" EntityType="Self.Sponsor" />
+          <EntitySet Name="Study" EntityType="Self.Study" />
+          <EntitySet Name="StudyArm" EntityType="Self.StudyArm" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" />
+          <EntitySet Name="SubjectAssignedTo" EntityType="Self.SubjectAssignedTo" />
+          <EntitySet Name="UserPermissions" EntityType="Self.UserPermissions" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_91387_spring2018dbModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Activity">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="actPID" ColumnName="actPID" />
+                <ScalarProperty Name="actName" ColumnName="actName" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDuration" ColumnName="actDuration" />
+                <ScalarProperty Name="actCost" ColumnName="actCost" />
+                <ScalarProperty Name="actStudyArmLinkID" ColumnName="actStudyArmLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appointment">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="appPID" ColumnName="appPID" />
+                <ScalarProperty Name="appStartDate" ColumnName="appStartDate" />
+                <ScalarProperty Name="appEndDate" ColumnName="appEndDate" />
+                <ScalarProperty Name="appCompletedStatus" ColumnName="appCompletedStatus" />
+                <ScalarProperty Name="appStudyArmLinkID" ColumnName="appStudyArmLinkID" />
+                <ScalarProperty Name="appActivityLinkID" ColumnName="appActivityLinkID" />
+                <ScalarProperty Name="appVisitLinkID" ColumnName="appVisitLinkID" />
+                <ScalarProperty Name="appDoctorLinkID" ColumnName="appDoctorLinkID" />
+                <ScalarProperty Name="appSubjectLinkID" ColumnName="appSubjectLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctor">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="docPID" ColumnName="docPID" />
+                <ScalarProperty Name="docName" ColumnName="docName" />
+                <ScalarProperty Name="docSpecialization" ColumnName="docSpecialization" />
+                <ScalarProperty Name="docPhoneNumber" ColumnName="docPhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorAssignedTo">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.DoctorAssignedTo">
+              <MappingFragment StoreEntitySet="DoctorAssignedTo">
+                <ScalarProperty Name="datPID" ColumnName="datPID" />
+                <ScalarProperty Name="datCreatedDate" ColumnName="datCreatedDate" />
+                <ScalarProperty Name="datCreatedBy" ColumnName="datCreatedBy" />
+                <ScalarProperty Name="datDoctorLinkID" ColumnName="datDoctorLinkID" />
+                <ScalarProperty Name="datStudyArmLinkID" ColumnName="datStudyArmLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentInfo">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.DocumentInfo">
+              <MappingFragment StoreEntitySet="DocumentInfo">
+                <ScalarProperty Name="dinPID" ColumnName="dinPID" />
+                <ScalarProperty Name="dinDescription" ColumnName="dinDescription" />
+                <ScalarProperty Name="dinFileName" ColumnName="dinFileName" />
+                <ScalarProperty Name="dinBLOB" ColumnName="dinBLOB" />
+                <ScalarProperty Name="dinVersion" ColumnName="dinVersion" />
+                <ScalarProperty Name="dinStudyArmLinkID" ColumnName="dinStudyArmLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Site">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Site">
+              <MappingFragment StoreEntitySet="Site">
+                <ScalarProperty Name="sitPID" ColumnName="sitPID" />
+                <ScalarProperty Name="sitName" ColumnName="sitName" />
+                <ScalarProperty Name="sitDescription" ColumnName="sitDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sponsor">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Sponsor">
+              <MappingFragment StoreEntitySet="Sponsor">
+                <ScalarProperty Name="spoPID" ColumnName="spoPID" />
+                <ScalarProperty Name="spoName" ColumnName="spoName" />
+                <ScalarProperty Name="spoPhoneNumber" ColumnName="spoPhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Study">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Study">
+              <MappingFragment StoreEntitySet="Study">
+                <ScalarProperty Name="stuPID" ColumnName="stuPID" />
+                <ScalarProperty Name="stuName" ColumnName="stuName" />
+                <ScalarProperty Name="stuDescription" ColumnName="stuDescription" />
+                <ScalarProperty Name="stuEnrollmentGoal" ColumnName="stuEnrollmentGoal" />
+                <ScalarProperty Name="stuCompletedStatus" ColumnName="stuCompletedStatus" />
+                <ScalarProperty Name="stuStartDate" ColumnName="stuStartDate" />
+                <ScalarProperty Name="stuEndDate" ColumnName="stuEndDate" />
+                <ScalarProperty Name="stuSponsorLinKID" ColumnName="stuSponsorLinKID" />
+                <ScalarProperty Name="stuSiteLinkID" ColumnName="stuSiteLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudyArm">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.StudyArm">
+              <MappingFragment StoreEntitySet="StudyArm">
+                <ScalarProperty Name="sarPID" ColumnName="sarPID" />
+                <ScalarProperty Name="sarName" ColumnName="sarName" />
+                <ScalarProperty Name="sarStudyLinkID" ColumnName="sarStudyLinkID" />
+                <ScalarProperty Name="sarEnrollmentGoal" ColumnName="sarEnrollmentGoal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subject">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="subPID" ColumnName="subPID" />
+                <ScalarProperty Name="subInitials" ColumnName="subInitials" />
+                <ScalarProperty Name="subDOB" ColumnName="subDOB" />
+                <ScalarProperty Name="subGender" ColumnName="subGender" />
+                <ScalarProperty Name="subHeight" ColumnName="subHeight" />
+                <ScalarProperty Name="subBloodType" ColumnName="subBloodType" />
+                <ScalarProperty Name="subStatus" ColumnName="subStatus" />
+                <ScalarProperty Name="subSurvivalStatus" ColumnName="subSurvivalStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectAssignedTo">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.SubjectAssignedTo">
+              <MappingFragment StoreEntitySet="SubjectAssignedTo">
+                <ScalarProperty Name="satPID" ColumnName="satPID" />
+                <ScalarProperty Name="satCreatedDate" ColumnName="satCreatedDate" />
+                <ScalarProperty Name="satCreatedBy" ColumnName="satCreatedBy" />
+                <ScalarProperty Name="satSubjectLinkID" ColumnName="satSubjectLinkID" />
+                <ScalarProperty Name="satStudyArmLinkID" ColumnName="satStudyArmLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPermissions">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.UserPermissions">
+              <MappingFragment StoreEntitySet="UserPermissions">
+                <ScalarProperty Name="upePID" ColumnName="upePID" />
+                <ScalarProperty Name="upeCreatedDate" ColumnName="upeCreatedDate" />
+                <ScalarProperty Name="upeCreatedBy" ColumnName="upeCreatedBy" />
+                <ScalarProperty Name="upeUserLinkID" ColumnName="upeUserLinkID" />
+                <ScalarProperty Name="upeStudyLinkID" ColumnName="upeStudyLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="usePID" ColumnName="usePID" />
+                <ScalarProperty Name="useCreatedDate" ColumnName="useCreatedDate" />
+                <ScalarProperty Name="useCreatedBy" ColumnName="useCreatedBy" />
+                <ScalarProperty Name="useModifiedDate" ColumnName="useModifiedDate" />
+                <ScalarProperty Name="useModifiedBy" ColumnName="useModifiedBy" />
+                <ScalarProperty Name="useUserStatus" ColumnName="useUserStatus" />
+                <ScalarProperty Name="useUserType" ColumnName="useUserType" />
+                <ScalarProperty Name="useUserName" ColumnName="useUserName" />
+                <ScalarProperty Name="usePassword" ColumnName="usePassword" />
+                <ScalarProperty Name="useSiteLinkID" ColumnName="useSiteLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visit">
+            <EntityTypeMapping TypeName="DB_91387_spring2018dbModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="visPID" ColumnName="visPID" />
+                <ScalarProperty Name="visName" ColumnName="visName" />
+                <ScalarProperty Name="visDescription" ColumnName="visDescription" />
+                <ScalarProperty Name="visStart" ColumnName="visStart" />
+                <ScalarProperty Name="visEnd" ColumnName="visEnd" />
+                <ScalarProperty Name="visStudyArmLinkID" ColumnName="visStudyArmLinkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

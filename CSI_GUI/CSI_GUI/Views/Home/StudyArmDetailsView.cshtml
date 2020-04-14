@@ -1,0 +1,160 @@
+﻿@using CSI_GUI.Models
+@using CSI_GUI.Code
+@model CSI_GUI.Controllers.HomeController.StudyArmDetailsViewModel
+
+    ViewBag.Title = "Study Arm Details View";
+}
+
+<h2>Arm Details</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Activity</th>
+            <th>Duration (minutes)</th>
+            @foreach (Visit visit in Model.visits)
+            {
+                <th>@visit.visName.ToString()</th>
+
+            }
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Activity aa in Model.activities)
+            {
+            <tr>
+                <td>@Model.activities.FirstOrDefault(x => x.actPID == aa.actPID).actName</td>
+                <td>@Model.activities.FirstOrDefault(x => x.actPID == aa.actPID).actDuration</td>
+
+                @foreach (Visit visit in Model.visits)
+                {
+
+                    <td>
+                        @if (@Model.appointments.Exists(y => y.appActivityLinkID == aa.actPID && y.appVisitLinkID == visit.visPID))
+                        {
+                            int appointmentID = Model.appointments.FirstOrDefault(y => y.appActivityLinkID == aa.actPID && y.appVisitLinkID == visit.visPID).appPID;
+
+                            <input type="checkbox"
+                                   id="@Model.VisitActivitiesCheckBoxes.First(y => y.appPID == appointmentID).appPID"
+                                   name="@Model.VisitActivitiesCheckBoxes.First(y => y.appPID == appointmentID).appPID"
+                                   checked />
+                        }
+                        else
+                        {
+                            string visPID = visit.visPID.ToString();
+                            string actPID = aa.actPID.ToString();
+                            <input type="checkbox"
+                                   id="-1"
+                                   visPID="@visPID"
+                                   actPID="@actPID"
+                                   name="-1" />
+                        }
+                    </td>
+                }
+                <td></td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>Subject Information</tr>
+            <tr>
+                <th>Initials</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Height</th>
+                <th>Blood Type</th>
+                <th>Status</th>
+                <th>Survival Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.subjects)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@item.subInitials, "SubjectReport", new { id = item.subPID }, new { @class = "text" })</td>
+                    <td>@Convert.ToDateTime(item.subDOB).ToString("MM/dd/yyyy")</td>
+                    <td>@item.subGender</td>
+                    <td>@item.subHeight</td>
+                    <td>@item.subBloodType</td>
+                    <td>@item.subStatus</td>
+                    <td>@item.subSurvivalStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.ActionLink("Assign Subject", "LinkSubject", new { id = Model.studyArmID }, new { @class = "btn btn-primary" })
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <table class="table table-hover">
+            <thead>
+                <tr>Doctor Information</tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Phone Numer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.doctors)
+            {
+                    <tr>
+                        <td>@Html.ActionLink(@item.docName, "DoctorReport", new { id = item.docPID }, new { @class = "text" })</td>
+                        <td>@item.docSpecialization</td>
+                        <td>@item.docPhoneNumber</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Assign Doctor", "LinkDoctor", new { id = Model.studyArmID }, new { @class = "btn btn-primary" })
+    </div>
+    <div class="col-xs-6">
+        <table class="table table-hover">
+            <thead>
+                <tr class="text-center">Files</tr>
+                <tr>
+                    <th>Description</th>
+                    <th>File Name</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.documents)
+            {
+                    <tr>
+                        <td>@item.dinDescription</td>
+                        <td>@item.dinFileName</td>
+                        <td>@item.dinVersion</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts
+    {
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script>
+        $(':checkbox').change(function () {
+            $.post('../Home/AppointmentUpdate', { appPID: this.id, visPID: this.visPID, actPID: this.actPID, isChecked: this.checked });
+        });
+    </script>
+}

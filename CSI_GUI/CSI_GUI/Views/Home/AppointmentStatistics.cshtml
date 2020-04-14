@@ -1,0 +1,53 @@
+﻿@using CSI_GUI.Models
+@model List<AppointmentStatisticsViewModel>
+@{
+    ViewBag.Title = "Appointment Statistics";
+}
+
+@{string currentStudyName = ""; } 
+
+<h2>Appointment Statistics</h2>
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr class="grey">
+                <th>Study</th>
+                <th>Study Arm</th>
+                <th>Completed Status</th>
+                <th>Activity</th>
+                <th>Cost</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr style="color:black">
+                    @if (currentStudyName != item.stuName)
+                    {
+                        <td>@item.stuName</td>
+                        currentStudyName = @item.stuName;
+                    }
+                    else
+                    {
+                        <td></td>
+
+                    }
+                    <td>@item.sarName</td>
+                    @if(item.appCompletedStatus == 1)
+                    {
+                        <td>Completed</td>
+                    }
+                    else
+                    {
+                        <td>Incomplete</td>
+                    }
+                    <td>@item.actName</td>
+                    <td>@item.actCost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

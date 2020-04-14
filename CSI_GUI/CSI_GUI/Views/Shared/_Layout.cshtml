@@ -1,0 +1,101 @@
+﻿@using CSI_GUI.Code
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CIS</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <!-- Latest compiled JavaScript -->
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @if (SessionManager.CurrentUser != null)
+                {
+                    @Html.ActionLink("Clinically Insane Systems", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else
+                {
+                    @Html.ActionLink("Clinically Insane Systems", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                }
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Dashboard", "Index")</li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Studies Report", "StudyReport", -1)</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Appointment Statistics Report", "AppointmentStatistics", -1)</li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create New<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Site", "AddSite", "Home")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Sponsor", "AddSponsor", "Home")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Doctor", "AddDoctor", "Home")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Subject", "AddSubject", "Home")</li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+                @if (SessionManager.CurrentUser == null)
+                {
+                    @Html.Partial("_LoginPartial")
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="background-color:cadetblue; padding-top:2em;">
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - CIS</p>
+        </footer>
+    </div>
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+﻿@using CSI_GUI.Models
+@using CSI_GUI.Code
+@model List<DashboardViewModel>
+@{
+    ViewBag.Title = "Hello, " + @SessionManager.CurrentUser.useUserName;
+}
+
+@*@Html.ActionLink("Add Study", "EditStudy", new Studies { stuPID = -1, stuStudiesName = "whatever" }, new { @class = "btn btn-primary" })*@
+
+<div class="jumbotron">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Study</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Arm</th>
+                <th>Enrollment Goal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.sitName</td>
+                    <td>@item.stuName</td>
+                    <td>@item.stuStartDate</td>
+                    <td>@item.stuEndDate</td>
+                    <td>@Html.ActionLink(@item.sarName, "StudyArmDetailsView", new { id = @item.sarPID }, new { @class = "btn btn-primary" })</td>
+                    <td>@item.sarEnrollmentGoal</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

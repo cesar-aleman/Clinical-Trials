@@ -1,0 +1,97 @@
+﻿@using CSI_GUI.Models
+@model StudyReportBIGModel
+
+@{
+    ViewBag.Title = "Study Report";
+}
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Study Name</th>
+                <th>Study Start Date</th>
+                <th>Study End Date</th>
+                <th>Study Arm Name</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr></tr>
+            @foreach (var item in Model.studyDetails)
+            {
+                <tr>
+                    <td>@item.stuName</td>
+                    <td>@Convert.ToDateTime(item.stuStartDate).ToString("MM/dd/yyyy")</td>
+                    @if(item.stuEndDate == Convert.ToDateTime("1/1/1900"))
+                    {
+                        <td>Incomplete</td>
+                    }
+                    else
+                    {
+                        <td>@Convert.ToDateTime(item.stuEndDate).ToString("MM/dd/yyyy")</td>
+                    }
+                    <td>@item.sarName</td>
+                    <td>$@item.TotalCost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="col-xs-6">
+    <div @*class="jumbotron" *@>
+        <table class="table table-hover">
+            <thead>
+                <tr>Doctor Information</tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Phone Numer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.doctors)
+                {
+                    <tr>
+                        <td>@item.docName</td>
+                        <td>@item.docSpecialization</td>
+                        <td>@item.docPhoneNumber</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-xs-6">
+    @*<div class="jumbotron">*@
+    <table class="table table-hover">
+        <thead>
+            <tr>Subject Information</tr>
+            <tr>
+                <th>Initials</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Height</th>
+                <th>Blood Type</th>
+                <th>Status</th>
+                <th>Survival Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.subjects)
+            {
+                <tr>
+                    <td>@item.subInitials</td>
+                    <td>@Convert.ToDateTime(item.subDOB).ToString("MM/dd/yyyy")</td>
+                    <td>@item.subGender</td>
+                    <td>@item.subHeight</td>
+                    <td>@item.subBloodType</td>
+                    <td>@item.subStatus</td>
+                    <td>@item.subSurvivalStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*</div>*@
+</div>

@@ -1,0 +1,62 @@
+﻿@using CSI_GUI.Models
+@using CSI_GUI.Code
+@model List<DashboardViewModel>
+@{
+    ViewBag.Title = "Hello, " + @SessionManager.CurrentUser.useUserName;
+}
+
+@{string currentSiteName = ""; string currentStudyName = "";}
+
+<div class="jumbotron">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Study</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Arm</th>
+                <th>Enrollment Goal</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr style="color:black">
+                    @if (currentSiteName != item.sitName)
+                    {
+                        <td>@item.sitName</td>
+                        currentSiteName = @item.sitName;
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (currentStudyName != item.stuName)
+                    {
+                        <td>@Html.ActionLink(@item.stuName, "StudyReportByID", new { id = item.stuPID }, new { @class = "btn btn-primary" })</td>
+                        currentStudyName = @item.stuName;
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
+                    <td>@item.stuStartDate.ToString("MM/dd/yyyy")</td>
+                    @if(item.stuEndDate == Convert.ToDateTime("1/1/1900"))
+                    {
+                        <td>Incomplete</td>
+                    }
+                    else
+                    {
+                        <td>@item.stuEndDate.Date.ToString("MM/dd/yyyy")</td>
+                    }
+                    <td>@Html.ActionLink(@item.sarName, "StudyArmDetailsView", new { id = @item.sarPID }, new { @class = "btn btn-primary" })</td>
+                    <td>@item.sarEnrollmentGoal</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

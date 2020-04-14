@@ -1,0 +1,62 @@
+﻿@using CSI_GUI.Models
+@using CSI_GUI.Code
+@model CSI_GUI.Controllers.HomeController.LinkDoctorsViewModel
+
+@{
+    ViewBag.Title = "LinkDoctor";
+}
+
+<div class="row">
+    <div class="col-lg-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Specialization</th>
+                    @*<th>Primary Site</th>*@
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doc in Model.unassignedDoctors)
+            {
+                    <tr>
+                        <td>@doc.docName</td>
+                        <td>@doc.docSpecialization</td>
+                        @*<td>SiteName</td>*@
+                        <td>@Html.ActionLink("Add", "LinkDoctorID", new { docID = doc.docPID, sarID = Model.studyArmID }, new { @class = "text" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-1">
+    </div>
+
+    <div class="col-lg-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Specialization</th>
+                    @*<th>Primary Site</th>*@
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doc in Model.assignedDoctors)
+            {
+                    <tr>
+                        <td>@doc.docName</td>
+                        <td>@doc.docSpecialization</td>
+                        @*<td>SiteName</td>*@
+                        <td>@Html.ActionLink("Remove", "UnLinkDoctorID", new { docID = doc.docPID, sarID = Model.studyArmID }, new { @class = "text" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+
+

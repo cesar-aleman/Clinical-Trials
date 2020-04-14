@@ -1,0 +1,49 @@
+﻿@using CSI_GUI.Models
+@model List<DoctorReportViewModel>
+@{
+    ViewBag.Title = "Doctor's Appointments";
+}
+<h2>Completed/Incomplete Appointments</h2>
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Doctor</th>
+                <th>Study</th>
+                <th>Arm</th>
+                <th>Date</th>
+                <th>Completed Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>Doctor Appointment Information</tr>
+            @{string doctorName = "";}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (doctorName != item.docName)
+                    {
+                        <td>@item.docName</td>
+                        doctorName = item.docName;
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>@item.stuName</td>
+                    <td>@item.sarName</td>
+                    <td>@Convert.ToDateTime(item.appStartDate).ToString("MM/dd/yyyy")</td>
+                    @if (item.appCompletedStatus == 1)
+                    {
+                        <td>Completed</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Incomplete", "CompleteAppointment", new { appID = item.appPID }, new { @class = "text" })</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
